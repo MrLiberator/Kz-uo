@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kursy ogólnouczelniane co semestr</title>
+<style>
+  :root{--bg:#f6f5f1;--card:#fff;--ink:#1d1f23;--mute:#5d6470;--line:#e2e0d8;--now:#b4532a;--new:#2a7a4f;--acc:#24408e;--hl:#eef2fb}
+  body.dark{--bg:#15171b;--card:#1f2228;--ink:#e8e9ec;--mute:#9aa1ad;--line:#33363d;--now:#e08a5f;--new:#5cc48a;--acc:#8fa8ff;--hl:#232a3d}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;transition:background .2s,color .2s}
+  body.pl .uk, body.uk .pl{display:none}
+  .wrap{max-width:820px;margin:0 auto;padding:20px 16px 60px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  h1{font-size:1.5rem;margin:.2em 0}
+  h2{font-size:1.1rem;margin:0 0 .6em;color:var(--acc)}
+  .ctrls{display:flex;gap:8px}
+  .seg{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .seg button{border:0;background:none;padding:7px 12px;font:inherit;cursor:pointer;color:var(--mute)}
+  .seg button.on{background:var(--acc);color:#fff}
+  section,details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-top:14px}
+  summary{cursor:pointer;font-weight:600;color:var(--acc);font-size:1.1rem;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"▾";transition:transform .2s}
+  details[open] summary::after{transform:rotate(180deg)}
+  details p{margin:.8em 0 0}
+  .propose{background:var(--hl);border-left:4px solid var(--acc)}
+  .propose p{margin:0;font-size:1.05rem}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:640px){.cols{grid-template-columns:1fr}}
+  .col{border-radius:10px;padding:14px;border:1px solid var(--line)}
+  .col.now{border-top:4px solid var(--now)}
+  .col.new{border-top:4px solid var(--new)}
+  .col h3{margin:0 0 8px;font-size:1rem}
+  .sem{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+  .sem:last-child{border-bottom:0}
+  .tag{flex:0 0 62px;font-weight:600;color:var(--mute);font-size:.9rem}
+  ul{margin:.3em 0;padding-left:1.2em}
+  li{margin:.35em 0}
+  .ok{color:var(--new);font-weight:600}
+  .sem ul{margin:.3em 0 0;padding-left:1.1em}
+  .sem li{margin:.15em 0}
+  .note{color:var(--mute);font-size:.9rem}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+  .lbl{display:block;margin-bottom:4px}
+  .box{background:var(--bg);border-radius:10px;padding:12px}
+  .big{display:block;font-size:1.7rem;font-weight:700;color:var(--now);line-height:1.2;margin-bottom:4px}
+  .url{display:inline-block;margin-top:4px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--acc);font-family:ui-monospace,Consolas,monospace;font-size:1.05rem;text-decoration:none;word-break:break-all}
+  .form{display:inline-block;margin-top:4px;padding:10px 16px;border-radius:8px;background:var(--acc);color:#fff;text-decoration:none;font-weight:600}
+  footer{margin-top:20px;color:var(--mute);font-size:.9rem;text-align:center}
+</style>
+</head>
+<body class="pl">
+<div class="wrap">
+
+<header>
+  <h1><span class="pl">Kursy ogólnouczelniane co semestr</span><span class="uk">Щосеместрові курси ogólnouczelniane</span></h1>
+  <div class="ctrls">
+    <div class="seg" id="lang"><button data-l="pl" class="on">PL</button><button data-l="uk">UA</button></div>
+    <div class="seg" id="theme"><button data-t="light" class="on" aria-label="light">🌞</button><button data-t="dark" aria-label="dark">🌙</button></div>
+  </div>
+</header>
+
+<details>
+  <summary><span class="pl">Skąd to się wzięło</span><span class="uk">Звідки це взялося</span></summary>
+  <p class="pl">Zauważyłem, że wszystkich nas frustruje sens tych kursów. Chodzimy na przykład na ekonomię i uczymy się ich terminów, a jesteśmy informatykami i powinniśmy uczyć się czegoś bliższego nam. Przykład: uczelnia jest akademią Cisco, ale gdy pytałem, jak się zapisać, pytanie poszło na wycieczkę: wykładowca → drugi wykładowca → dziekanat → sekretariat → z powrotem do wykładowców. Prawie nikt nie wiedział, dopóki koła nie przerwał opiekun roku. To dobrze pokazuje, że możliwość uczenia się tego, czego chcemy, istnieje, tylko trudno ją wykopać.</p>
+  <p class="uk">Помітив фрустрацію серед усіх щодо сенсу цих курсів. Ходимо, наприклад, на економічний і вчимо їхні терміни, хоча ми інформатики й маємо вчити те, що нам ближче. Для прикладу: університет є академією Cisco, але коли я питав, як записатися, питання пішло на екскурсію: викладач → інший викладач → деканат → секретаріат → знову до викладачів. Майже ніхто не знав, поки коло не розірвав куратор року. Це добре показує, що можливість вчити те, що хочеться, є, але її важко відкопати.</p>
+</details>
+
+<section class="propose">
+  <p class="pl"><b>Proponuję:</b> żeby połowa tych godzin pracowała na nas i na nasz zawód. Pomoże to w rozwoju i nawet w wyborze tematu inżynierki.</p>
+  <p class="uk"><b>Пропоную:</b> щоб половина цих годин працювала на нас і на нашу професію. Це допоможе в особистому розвитку і навіть у виборі теми інженерки.</p>
+</section>
+
+<section>
+  <h2><span class="pl">Jak jest i jak mogłoby być</span><span class="uk">Як є і як могло б бути</span></h2>
+  <div class="cols">
+    <div class="col now">
+      <h3><span class="pl">Jak jest (znacie to z autopsji)</span><span class="uk">Як є (ви це знаєте з власного досвіду)</span></h3>
+      <div class="sem"><span class="tag">Sem. 1</span><span class="pl">Spokój, bez ogólnouczelnianych</span><span class="uk">Спокій, без ogólnouczelnianych</span></div>
+      <div class="sem"><span class="tag">Sem. 2-7</span><span><span class="pl">Co semestr 30 godz. czegoś z innego wydziału. Kurs obowiązkowy, wybieramy najmniejsze zło</span><span class="uk">Щосеместру 30 год. чогось з іншого факультету. Курс обов'язковий, обираємо найменше зло</span></span></div>
+      <div class="sem"><span class="tag">Σ</span><span class="pl">12 ECTS, które niewiele nam dają</span><span class="uk">12 ECTS, які нам мало що дають</span></div>
+    </div>
+    <div class="col new">
+      <h3><span class="pl">Jak mogłoby być</span><span class="uk">Як могло б бути</span></h3>
+      <div class="sem"><span class="tag">Sem. 1</span><span class="pl">Tak samo, spokój, bez ogólnouczelnianych</span><span class="uk">Так само, спокій, без ogólnouczelnianych</span></div>
+      <div class="sem"><span class="tag">Sem. 2-4</span><span>
+        <span class="pl">Nadal KZ humanistyczne/społeczne <span class="note">(obowiązkowe ustawowo, min. 5 ECTS)</span>, ale przydatne:
+          <ul><li>rynek pracy IT</li><li>ścieżki: inżynier, magister, doktor, profesor - co daje każdy etap i czego wymaga</li><li>B2B, umowa o dzieło, umowa o pracę</li></ul></span>
+        <span class="uk">Так само KZ гуманітарні/суспільні <span class="note">(обов'язкові законодавством, мін. 5 ECTS)</span>, але корисні:
+          <ul><li>ринок праці IT</li><li>шляхи: інженер, магістр, доктор, професор - що дає кожен етап і що для нього потрібно</li><li>B2B, umowa o dzieło, umowa o pracę</li></ul></span>
+      </span></div>
+      <div class="sem"><span class="tag">Sem. 5-7</span><span>
+        <span class="pl">Wybierasz coś pod siebie z IT, np.:
+          <ul><li>bezpieczeństwo Linuxa</li><li>architektura systemów komercyjnych</li><li>chmura</li><li>Cisco</li><li>AI/LLM</li></ul></span>
+        <span class="uk">Обираєш щось під себе з IT, напр.:
+          <ul><li>безпека в Linux</li><li>архітектура комерційних систем</li><li>хмари</li><li>Cisco</li><li>AI/LLM</li></ul></span>
+      </span></div>
+      <div class="sem"><span class="tag">Σ</span><span class="pl">Te same 12 ECTS, tylko z sensem dla nas</span><span class="uk">Ті самі 12 ECTS, тільки з сенсом для нас</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="pl">Czego NIE ruszamy</span><span class="uk">Чого НЕ чіпаємо</span></h2>
+  <ul>
+    <li class="pl"><span class="ok">✓</span> Nie będzie więcej godzin. Tyle samo ECTS, tyle samo zajęć</li>
+    <li class="uk"><span class="ok">✓</span> Годин більше не стане. Стільки ж ECTS, стільки ж занять</li>
+    <li class="pl"><span class="ok">✓</span> Plan się nie rozwali, to te same okienka</li>
+    <li class="uk"><span class="ok">✓</span> Розклад не розвалиться, ті самі вікна</li>
+    <li class="pl"><span class="ok">✓</span> Obowiązkowe ustawowo min. 5 ECTS humanistycznych/społecznych zostaje (mamy 6)</li>
+    <li class="uk"><span class="ok">✓</span> Обов'язкові за законодавством мін. 5 ECTS гуманітарних/суспільних лишаються (у нас 6)</li>
+    <li class="pl"><span class="ok">✓</span> Inne wydziały dalej mają u nas zajęcia w sem. 2-4, więc nikomu niczego nie zabieramy i nie robimy sobie wrogów w biurokracji</li>
+    <li class="uk"><span class="ok">✓</span> Інші факультети й далі мають у нас заняття в сем. 2-4, тож ні в кого нічого не забираємо і бюрократичних ворогів собі не наживемо</li>
+  </ul>
+</section>
+
+<section>
+  <h2><span class="pl">Parę faktów, gdyby ktoś pytał</span><span class="uk">Кілька фактів, якщо хтось спитає</span></h2>
+  <div class="grid">
+    <div class="box"><span class="big">9 / 10</span><span class="pl">kursów społecznych w tym semestrze jest z pedagogiki. Np. „Dylematy i wartości w pracy nauczyciela” albo „Niezwykły świat poczętego dziecka”. Serio?</span><span class="uk">суспільних курсів цього семестру - з педагогіки. Напр. «Dylematy i wartości w pracy nauczyciela» або «Niezwykły świat poczętego dziecka». Серйозно?</span></div>
+    <div class="box"><b class="lbl">Cisco</b><span class="pl">Akademia jest, plakaty są, informacji, jak się zapisać, nie ma.</span><span class="uk">Академія є, плакати є, інформації, як записатися, немає.</span></div>
+    <div class="box"><b class="lbl">Red Hat</b><span class="pl">Większość nawet nie słyszała o Red Hat Academy, którą też da się wyprosić (!!!) na uczelni</span><span class="uk">Більшість навіть не чула про Red Hat Academy, яку теж можна випросити (!!!) в універі</span></div>
+    <div class="box"><b class="lbl"><span class="pl">Z wyprzedzeniem</span><span class="uk">Заздалегідь</span></b><span class="pl">Przedmioty do wyboru planuje się z wyprzedzeniem, a na 2. semestrze mało kto wie, w co chce iść. A kursy, które mają nas „ogólnie uczyć”, tej roboty nie robią.</span><span class="uk">Предмети за вибором плануються наперед, а на 2 семестрі мало хто знає, куди хоче йти. А курси, які мають нас «ogólnie uczyć», своєї роботи не виконують.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2><span class="pl">Co mówicie wy</span><span class="uk">Що кажете ви</span></h2>
+  <!-- TODO: zamień XXXXXXXX (2x) na swój link -->
+  <a class="url" href="https://forms.gle/H2QJcCeJZEViWEYr7" target="_blank" rel="noopener">forms.gle/H2QJcCeJZEViWEYr7</a>
+</section>
+
+<section>
+  <h2><span class="pl">Co dalej</span><span class="uk">Що далі</span></h2>
+  <p class="pl">Chcę z tym pójść do samorządu studenckiego, bo to oni mogą to oficjalnie zgłosić. Im więcej nas, tym poważniej to wygląda. Jeśli się zgadzasz, daj znać mi albo staroście. Jeśli się nie zgadzasz albo masz lepszy pomysł, też pisz, wysłuchamy każdego.</p>
+  <p class="uk">Хочу піти з цим до студентського самоврядування, бо саме вони можуть офіційно це подати. Чим більше нас, тим серйозніше це виглядає. Якщо згоден - напиши мені або старості. Якщо не згоден або маєш кращу ідею - теж пиши, дослухаємося до всіх.</p>
+</section>
+
+<footer>
+  <span class="pl">Denys, Informatyka, II rok</span>
+  <span class="uk">Денис, Informatyka, II курс</span>
+</footer>
+
+</div>
+<script>
+  const st={l:'pl',t:'light'};
+  function apply(){
+    document.body.className=st.l+(st.t==='dark'?' dark':'');
+    document.documentElement.lang=st.l==='uk'?'uk':'pl';
+    document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===st.l));
+    document.querySelectorAll('#theme button').forEach(b=>b.classList.toggle('on',b.dataset.t===st.t));
+    try{localStorage.setItem('kz',JSON.stringify(st))}catch(e){}
+  }
+  document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{st.l=b.dataset.l;apply()});
+  document.querySelectorAll('#theme button').forEach(b=>b.onclick=()=>{st.t=b.dataset.t;apply()});
+  try{Object.assign(st,JSON.parse(localStorage.getItem('kz')||'{}'))}catch(e){}
+  if(!localStorage.getItem||!(()=>{try{return localStorage.getItem('kz')}catch(e){}})()){
+    if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)st.t='dark';
+  }
+  apply();
+</script>
+</body>
+</html>
